@@ -1,5 +1,5 @@
 {
-  "name": "takielias/codeigniter-websocket",
+  "name": "eddycoder/codeigniter-websocket",
   "keywords": [
     "php7",
     "php-library",
@@ -21,7 +21,7 @@
     }
   ],
   "require": {
-    "php": ">=5.4.0",
+    "php": ">=5.6.0",
     "cboden/ratchet": "^0.4.1",
     "textalk/websocket": "^1.2"
   },

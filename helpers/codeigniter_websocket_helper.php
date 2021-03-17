@@ -42,30 +42,3 @@ if (!function_exists('valid_jwt')) {
 		return AUTHORIZATION::validateToken($token);
 	}
 }
-
-/**
- * Codeigniter Websocket Library: helper file
- */
-if (!function_exists('output')) {
-
-	/**
-	 * Output valid or invalid logs
-	 * @method output
-	 * @param string $type Log type
-	 * @param string $var String
-	 * @return string
-	 */
-	function output($type = 'success', $output = null)
-	{
-		if ($type == 'success') {
-			echo "\033[32m" . $output . "\033[0m" . PHP_EOL;
-		} elseif ($type == 'error') {
-			echo "\033[31m" . $output . "\033[0m" . PHP_EOL;
-		} elseif ($type == 'fatal') {
-			echo "\033[31m" . $output . "\033[0m" . PHP_EOL;
-			exit(EXIT_ERROR);
-		} else {
-			echo $output . PHP_EOL;
-		}
-	}
-}

@@ -101,7 +101,7 @@ class Codeigniter_websocket
 
 		// Config file verification
 		if (empty($this->config)) {
-			output('fatal', 'The configuration file does not exist');
+			output('The configuration file does not exist', 'fatal');
 		}
 
 		// Assign HOST value to class var
@@ -172,7 +172,7 @@ class Codeigniter_websocket
 				// Register callback as class var
 				$this->callback[$type] = $callback;
 			} else {
-				output('fatal', 'Method ' . $callback[1] . ' is not defined');
+				output('Method ' . $callback[1] . ' is not defined', 'fatal');
 			}
 		}
 	}
@@ -215,23 +215,22 @@ class Server implements MessageComponentInterface
 
 		// // Check if auth is required
 		if ($this->CI->codeigniter_websocket->auth && empty($this->CI->codeigniter_websocket->callback['auth'])) {
-			output('fatal', 'Authentication callback is required, you must set it before run server, aborting..');
+			output('Authentication callback is required, you must set it before run server, aborting..', 'fatal');
 		}
 
 		// Output
 		if ($this->CI->codeigniter_websocket->debug) {
-			output('success',
-				'Running server on host ' . $this->CI->codeigniter_websocket->host . ':' . $this->CI->codeigniter_websocket->port);
+			output('Running server on host ' . $this->CI->codeigniter_websocket->host . ':' . $this->CI->codeigniter_websocket->port, 'success');
 		}
 
 		// Output
 		if (!empty($this->CI->codeigniter_websocket->callback['auth']) && $this->CI->codeigniter_websocket->debug) {
-			output('success', 'Authentication activated');
+			output('Authentication activated', 'success');
 		}
 
 		// Output
 		if (!empty($this->CI->codeigniter_websocket->callback['close']) && $this->CI->codeigniter_websocket->debug) {
-			output('success', 'Close activated');
+			output('Close activated', 'success');
 		}
 
 	}
@@ -249,7 +248,7 @@ class Server implements MessageComponentInterface
 
 		// Output
 		if ($this->CI->codeigniter_websocket->debug) {
-			output('info', 'New client connected as (' . $connection->resourceId . ')');
+			output('New client connected as (' . $connection->resourceId . ')', 'info');
 		}
 	}
 
@@ -289,7 +288,7 @@ class Server implements MessageComponentInterface
 					// Verify authentication
 
 					if (empty($auth) or !is_integer($auth)) {
-						output('error', 'Client (' . $client->resourceId . ') authentication failure');
+						output('Client (' . $client->resourceId . ') authentication failure', 'error');
 						$client->send(json_encode(array("type" => "error", "msg" => 'Invalid ID or Password.')));
 						// Closing client connexion with error code "CLOSE_ABNORMAL"
 						$client->close(1006);
@@ -305,8 +304,8 @@ class Server implements MessageComponentInterface
 
 					// Output
 					if ($this->CI->codeigniter_websocket->debug) {
-						output('success', 'Client (' . $client->resourceId . ') authentication success');
-						output('success', 'Token : ' . AUTHORIZATION::generateToken($client->resourceId));
+						output('Client (' . $client->resourceId . ') authentication success', 'success');
+						output('Token : ' . AUTHORIZATION::generateToken($client->resourceId), 'success');
 					}
 				}
 
@@ -387,7 +386,7 @@ class Server implements MessageComponentInterface
 				if ($this->CI->codeigniter_websocket->auth) {
 
 					if (!valid_jwt($datas->token)) {
-						output('error', 'Client (' . $client->resourceId . ') authentication failure. Invalid Token');
+						output('Client (' . $client->resourceId . ') authentication failure. Invalid Token', 'error');
 						$client->send(json_encode(array("type" => "error", "msg" => 'Invalid Token.')));
 						// Closing client connexion with error code "CLOSE_ABNORMAL"
 						$client->close(1006);
@@ -425,7 +424,7 @@ class Server implements MessageComponentInterface
 			}
 
 		} else {
-			output('error', 'Client (' . $client->resourceId . ') Invalid json.');
+			output('Client (' . $client->resourceId . ') Invalid json.', 'error');
 			// Closing client connexion with error code "CLOSE_ABNORMAL"
 			$client->close(1006);
 		}
@@ -442,7 +441,7 @@ class Server implements MessageComponentInterface
 	{
 		// Output
 		if ($this->CI->codeigniter_websocket->debug) {
-			output('info', 'Client (' . $connection->resourceId . ') disconnected');
+			output('Client (' . $connection->resourceId . ') disconnected', 'info');
 		}
 
 		if (!empty($this->CI->codeigniter_websocket->callback['close'])) {
@@ -463,7 +462,7 @@ class Server implements MessageComponentInterface
 	{
 		// Output
 		if ($this->CI->codeigniter_websocket->debug) {
-			output('fatal', 'An error has occurred: ' . $e->getMessage());
+			output('An error has occurred: ' . $e->getMessage(), 'fatal');
 		}
 
 		// We close this connection
@@ -492,14 +491,13 @@ class Server implements MessageComponentInterface
 
 			// Output
 			if ($this->CI->codeigniter_websocket->debug) {
-				output('info', 'Callback event "' . $this->CI->codeigniter_websocket->callback['event'][1] . '" called');
+				output('Callback event "' . $this->CI->codeigniter_websocket->callback['event'][1] . '" called', 'info');
 			}
 		}
 
 		// Output
 		if ($this->CI->codeigniter_websocket->debug) {
-			output('info',
-				'Client (' . $client->resourceId . ') send \'' . $message . '\' to (' . $user->resourceId . ')');
+			output('Client (' . $client->resourceId . ') send \'' . $message . '\' to (' . $user->resourceId . ')', 'info');
 		}
 	}
 
